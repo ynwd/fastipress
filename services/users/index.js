@@ -18,15 +18,14 @@ module.exports = async function (fastify, opts) {
 
 async function registerHandler (request, response) {
   // const { email, password } = request.body
-  let res = await this.firebase.auth().createUser(request.body)
+  let res = await this.admin.auth().createUser(request.body)
   response.send(JSON.stringify(res))
 }
 
 async function loginHandler (request, response) {
-  const { email, password } = request.body
-  let credential = await this.firebase.credential(email, password)
-  let res = await this.firebase.signInAndRetrieveDataWithCredential(credential)
-  response.send(JSON.stringify(res))
+  // const { email, password } = request.body
+  // let credential = await this.firebase.credential(email, password)
+  // response.send(JSON.stringify(res))
 }
 
 async function meHandler (request, response) {

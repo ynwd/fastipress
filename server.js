@@ -5,10 +5,9 @@ require('dotenv').config()
 const start = async () => {
   try {
     fastify
-      .register(require('fastify-env'), { schema: require('./schemas').server })
       .register(require('./app'))
     await fastify.ready()
-    await fastify.listen(fastify.config.PORT)
+    await fastify.listen(3000)
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)

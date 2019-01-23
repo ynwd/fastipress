@@ -3,27 +3,49 @@ const { build } = require('../helper')
 
 t.test('user', async t => {
   const fastify = build(t)
+
   t.tearDown(() => {
     fastify.close()
-    fastify.firebase.app().delete()
+    fastify.admin.app().delete()
   })
-  t.plan(1)
+  t.plan(2)
 
-  const EMAIL = 'yanuwid@gmail.com'
-  const PASSWORD = 'testes'
+  t.test('register & delete new username', async t => {
+    const EMAIL = 'testing_123@gmail.com'
+    const PASSWORD = 'testes'
 
-  const regRes = await fastify.inject({
-    method: 'POST',
-    url: '/register',
-    headers: {
-      'Content-type': 'application/json'
-    },
-    payload: JSON.stringify({
-      email: EMAIL,
-      password: PASSWORD
+    const regRes = await fastify.inject({
+      method: 'POST',
+      url: '/register',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        email: EMAIL,
+        password: PASSWORD
+      })
     })
+    t.equal(regRes.statusCode, 200, regRes.payload)
   })
-  t.equal(regRes.statusCode, 200, regRes.payload)
+
+  t.test('duplicate username', async t => {
+    const EMAIL = 'testing_abc@gmail.com'
+    const PASSWORD = 'testes'
+
+    const regRes = await fastify.inject({
+      method: 'POST',
+      url: '/register',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        email: EMAIL,
+        password: PASSWORD
+      })
+    })
+    let payload = JSON.parse(regRes.payload)
+    t.equal(payload.message, 'The email address is already in use by another account.', payload)
+  })
 
   // t.test('register', async t => {
   //   t.plan(1)
