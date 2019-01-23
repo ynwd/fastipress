@@ -67,4 +67,4 @@ test/types/index.js
 
 .env
 
-config/
+config/firebase.json
