@@ -1,1 +1,1 @@
-# fstfy
+# Fastipress
