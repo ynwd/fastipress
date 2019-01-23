@@ -1,0 +1,31 @@
+{
+  "name": "fstfy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "standard --fix && tap test/**/*.test.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "fastify": "^1.13.4",
+    "fastify-env": "^0.6.2",
+    "fastify-firebase-auth": "0.0.2",
+    "fastify-plugin": "^1.4.0",
+    "firebase": "^5.8.0",
+    "firebase-admin": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "standard": "^12.0.1",
+    "tap": "^12.0.0"
+  }
+}
