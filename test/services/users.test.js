@@ -8,9 +8,10 @@ t.test('user', async t => {
     fastify.close()
     fastify.admin.app().delete()
   })
-  t.plan(2)
+  t.plan(3)
+  let data = {}
 
-  t.test('register & delete new username', async t => {
+  t.test('register new username', async t => {
     const EMAIL = 'testing_123@gmail.com'
     const PASSWORD = 'testes'
 
@@ -26,10 +27,11 @@ t.test('user', async t => {
       })
     })
     t.equal(regRes.statusCode, 200, regRes.payload)
+    data = JSON.parse(regRes.payload)
   })
 
   t.test('duplicate username', async t => {
-    const EMAIL = 'testing_abc@gmail.com'
+    const EMAIL = 'testing_123@gmail.com'
     const PASSWORD = 'testes'
 
     const regRes = await fastify.inject({
@@ -44,7 +46,27 @@ t.test('user', async t => {
       })
     })
     let payload = JSON.parse(regRes.payload)
-    t.equal(payload.message, 'The email address is already in use by another account.', payload)
+    t.equal(payload.message, 'The email address is already in use by another account.')
+  })
+
+  t.test('login', async t => {
+    const EMAIL = 'testing_123@gmail.com'
+    const PASSWORD = 'testes'
+
+    const loginRes = await fastify.inject({
+      method: 'POST',
+      url: '/login',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        email: EMAIL,
+        password: PASSWORD
+      })
+    })
+    let payload = JSON.parse(loginRes.payload)
+    t.equal(loginRes.statusCode, 200, payload)
+    await fastify.admin.auth().deleteUser(data.uid)
   })
 
   // t.test('register', async t => {

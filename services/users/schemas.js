@@ -32,12 +32,12 @@ const registration = {
       properties: {
         uid: { type: 'string' },
         email: { type: 'string' },
-        emailVerified: {type: 'boolean'},
+        emailVerified: { type: 'boolean' },
         displayName: { type: 'string' },
         photoURL: { type: 'string' },
         phoneNumber: { type: 'string' },
         disabled: { type: 'boolean' },
-        metadata: { 
+        metadata: {
           type: 'object',
           properties: {}
         }
