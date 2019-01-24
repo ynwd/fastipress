@@ -1,13 +1,13 @@
 const {
-  login: loginSchema,
-  registration: registrationSchema
+  login,
+  registration
   // search: searchSchema,
   // getProfile: getProfileSchema
 } = require('./schemas')
 
 module.exports = async function (fastify, opts) {
-  fastify.post('/login', { schema: loginSchema }, loginHandler)
-  fastify.post('/register', { schema: registrationSchema }, registerHandler)
+  fastify.post('/login', { schema: login }, loginHandler)
+  fastify.post('/register', { schema: registration }, registerHandler)
 
   fastify.register(async function (fastify) {
     fastify.get('/me', meHandler)
@@ -19,7 +19,8 @@ module.exports = async function (fastify, opts) {
 async function registerHandler (request, response) {
   // const { email, password } = request.body
   let res = await this.admin.auth().createUser(request.body)
-  response.send(JSON.stringify(res))
+  console.log(res)
+  return res
 }
 
 async function loginHandler (request, response) {
